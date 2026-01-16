@@ -66,12 +66,12 @@
 
 ```mermaid
 graph LR
-    User[사용자] -->|접속| Client[React Frontend (Vercel)]
+    User[사용자] -->|접속| Client["React Frontend (Vercel)"]
     Client -->|로그인| Kakao[Kakao Auth]
     Client -->|결제| PortOne[PortOne PG]
-    Client -->|API 요청| Server[Node.js Server (Render)]
+    Client -->|API 요청| Server["Node.js Server (Render)"]
     Server -->|AI 생성| Gemini[Google Gemini API]
-    Server -->|데이터 저장/조회| DB[(Supabase PostgreSQL)]
+    Server -->|데이터 저장/조회| DB[("Supabase PostgreSQL")]
     Client -->|인증 관리| SupabaseAuth[Supabase Auth]
 ```
 
