@@ -1,0 +1,429 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;500;700&display=swap');
+
+:root {
+  --bg-color: #fdfbf7; /* 한지 느낌의 미색 */
+  --text-color: #2c2c2c; /* 먹물색 */
+  --accent-color: #9a2a2a; /* 인주색 (붉은색) */
+  --border-color: #dcdcdc;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  background-color: #e0e0e0; /* 앱 밖의 배경은 어둡게 처리하여 집중도 향상 */
+  font-family: 'Noto Serif KR', serif;
+}
+
+#root {
+  width: 100%;
+  margin: 0 auto;
+  padding: 0;
+  text-align: center;
+}
+
+.korean-vibe-container {
+  max-width: 600px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 3rem 2rem;
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  box-sizing: border-box;
+  border-left: 1px solid #eee;
+  border-right: 1px solid #eee;
+}
+
+/* 타이틀 스타일 */
+.title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 3rem;
+  color: var(--text-color);
+  border-top: 3px double var(--text-color);
+  border-bottom: 3px double var(--text-color);
+  padding: 15px 20px;
+  letter-spacing: 0.1rem;
+  word-break: keep-all;
+}
+
+/* 사용자 섹션 (로그인/충전) */
+.user-section {
+  width: 100%;
+  margin-bottom: 2rem;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.9rem;
+}
+
+.user-greeting {
+  flex-grow: 1;
+  text-align: right;
+}
+
+.user-greeting strong {
+  color: var(--accent-color);
+  font-size: 1.1rem;
+}
+
+.charge-btn {
+  background-color: var(--text-color);
+  color: #fff;
+  border: none;
+  padding: 8px 15px;
+  font-size: 0.85rem;
+}
+
+.logout-btn {
+  border: 1px solid #ccc;
+  color: #666;
+  padding: 8px 12px;
+  font-size: 0.85rem;
+}
+
+.login-buttons {
+  display: flex;
+  gap: 10px;
+}
+
+.login-btn {
+  border: none;
+  font-weight: 700;
+  padding: 10px 20px;
+  border-radius: 4px;
+}
+
+.login-btn.kakao {
+  background-color: #FEE500;
+  color: #000000;
+}
+
+.login-btn.naver {
+  background-color: #03C75A;
+  color: #ffffff;
+}
+
+/* 탭 그룹 */
+.tab-group {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 2rem;
+}
+
+.tab-btn {
+  flex: 1;
+  border: none;
+  border-bottom: 2px solid #ccc;
+  color: #888;
+  padding-bottom: 10px;
+  white-space: nowrap; /* 텍스트 줄바꿈 방지 */
+}
+
+.tab-btn.active {
+  border-bottom: 2px solid var(--accent-color);
+  color: var(--text-color);
+  font-weight: 700;
+}
+
+/* 입력 섹션 */
+.input-section {
+  width: 100%;
+  margin-bottom: 2.5rem;
+}
+
+.input-section input,
+.input-section textarea {
+  width: 100%;
+  padding: 10px 10px;
+  font-size: 1.2rem;
+  font-family: 'Noto Serif KR', serif;
+  background: transparent;
+  border: none;
+  border-bottom: 2px solid #aaa;
+  text-align: center;
+  outline: none;
+  transition: border-color 0.3s ease;
+  box-sizing: border-box;
+}
+
+.input-section textarea {
+  resize: none;
+  height: 60px;
+  line-height: 1.6;
+}
+
+.input-section input:focus,
+.input-section textarea:focus {
+  border-bottom-color: var(--accent-color);
+}
+
+.input-section input::placeholder,
+.input-section textarea::placeholder {
+  color: #aaa;
+  font-style: italic;
+}
+
+/* 사주 폼 스타일 */
+.saju-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  text-align: left;
+}
+
+.form-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.form-row label {
+  font-weight: 500;
+  min-width: 80px;
+}
+
+.radio-group {
+  justify-content: center;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.divider {
+  color: #ccc;
+  margin: 0 5px;
+}
+
+/* 버튼 그룹 */
+.button-group {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+button {
+  padding: 12px 25px;
+  font-size: 1rem;
+  font-family: 'Noto Serif KR', serif;
+  font-weight: 500;
+  cursor: pointer;
+  background-color: transparent;
+  border: 1px solid var(--text-color);
+  color: var(--text-color);
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+button:focus,
+button:focus-visible {
+  outline: none;
+  border-color: var(--accent-color);
+  box-shadow: 0 0 0 1px var(--accent-color);
+}
+
+.premium-btn {
+  background-color: var(--accent-color);
+  color: white;
+  border-color: var(--accent-color);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.premium-btn:hover {
+  background-color: #7a1f1f;
+  transform: translateY(-2px);
+}
+
+/* 로딩 애니메이션 */
+.loading {
+  margin: 2rem 0;
+  font-size: 1.2rem;
+  color: var(--accent-color);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0% { opacity: 0.5; }
+  50% { opacity: 1; }
+  100% { opacity: 0.5; }
+}
+
+/* 결과지 스타일 */
+.result-paper {
+  width: 100%;
+  background-color: #fff;
+  padding: 2.5rem;
+  border: 1px solid #ddd;
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+  text-align: left;
+  line-height: 1.8;
+  font-size: 1.1rem;
+  white-space: pre-wrap; /* 줄바꿈 보존 */
+  position: relative;
+  margin-top: 1rem;
+  box-sizing: border-box;
+}
+
+.result-paper::before {
+  content: '';
+  position: absolute;
+  top: 6px; left: 6px; right: 6px; bottom: 6px;
+  border: 1px solid #eee;
+  pointer-events: none;
+}
+
+.kakao-share-btn {
+  background-color: #FEE500;
+  color: #000000;
+  border: none;
+  margin-top: 20px;
+  font-weight: 700;
+  width: 100%;
+}
+
+.kakao-share-btn:hover {
+  background-color: #fdd835;
+}
+
+/* 모달 스타일 */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--bg-color);
+  padding: 2rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border: 1px solid #ddd;
+}
+
+.modal-title {
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+  color: var(--text-color);
+  font-size: 1.5rem;
+  border-bottom: 2px solid var(--text-color);
+  padding-bottom: 10px;
+  display: inline-block;
+}
+
+.charge-options {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-bottom: 1.5rem;
+}
+
+.charge-option-btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  font-size: 1.1rem;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.charge-option-btn:hover {
+  border-color: var(--accent-color);
+  background-color: #fff5f5;
+}
+
+.bonus-text {
+  color: var(--accent-color);
+  font-weight: bold;
+}
+
+.badge {
+  font-size: 0.8rem;
+  background-color: var(--accent-color);
+  color: white;
+  padding: 2px 6px;
+  border-radius: 4px;
+  margin-left: 5px;
+}
+
+.badge.best {
+  background-color: #d4af37; /* 금색 */
+}
+
+.close-btn {
+  background-color: #eee;
+  border: none;
+  padding: 10px 20px;
+  color: #333;
+}
+
+/* 마이페이지 스타일 */
+.history-modal {
+  max-width: 500px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.history-list {
+  overflow-y: auto;
+  text-align: left;
+  margin-bottom: 1rem;
+  padding-right: 5px;
+}
+
+.history-item {
+  border: 1px solid #999; /* 테두리를 진하게 변경 */
+  padding: 15px;
+  margin-bottom: 15px;
+  border-radius: 4px;
+  background-color: #fafafa;
+}
+
+.history-header {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.history-type {
+  font-weight: bold;
+  color: var(--accent-color);
+}
+
+.history-input {
+  font-weight: bold;
+  margin: 5px 0;
+}
+
+.history-detail {
+  margin-top: 10px;
+  font-size: 0.95rem;
+  white-space: pre-wrap;
+}
