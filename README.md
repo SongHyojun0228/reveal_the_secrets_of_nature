@@ -1,16 +1,148 @@
-# React + Vite
+# 🔮 천기누설 (天機漏洩) - AI 운세 & 꿈 해몽 서비스
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+**천기누설**은 생성형 AI(Google Gemini)를 활용하여 사용자의 꿈을 해몽하고 사주를 풀이해주는 웹 서비스입니다.
+한국적인 디자인과 신비로운 분위기 속에서 무료 맛보기와 유료 상세 풀이를 제공하며, 카카오 로그인 및 결제 시스템을 통해 실제 수익화가 가능한 구조로 설계되었습니다.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## 📚 목차
 
-## React Compiler
+1. [프로젝트 개요](#-프로젝트-개요)
+2. [주요 기능](#-주요-기능)
+3. [기술 스택](#-기술-스택)
+4. [시스템 아키텍처](#-시스템-아키텍처)
+5. [데이터베이스 구조](#-데이터베이스-구조)
+6. [설치 및 실행 방법](#-설치-및-실행-방법)
+7. [배포](#-배포)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+## 🌟 프로젝트 개요
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- **프로젝트명**: 천기누설 (The First Monetization Project)
+- **목표**: AI API와 결제 모듈을 연동하여 실제 수익 창출이 가능한 웹 서비스 구축
+- **핵심 가치**:
+    - **접근성**: 별도 가입 없이도(또는 간편 로그인으로) 쉽게 운세 확인
+    - **전문성**: LLM(Gemini) 프롬프트 엔지니어링을 통한 고품질의 운세 풀이
+    - **수익화**: 부분 유료화 모델 (Freemium) 적용
+
+## 🚀 주요 기능
+
+*   **꿈 해몽 & 사주 풀이**:
+    *   **무료 맛보기**: 키워드 입력 시 짧고 강렬한 요약 제공.
+    *   **유료 상세 풀이**: 500냥(포인트)을 사용하여 AI가 분석한 상세 운세 제공.
+*   **회원 시스템**:
+    *   **카카오 로그인**: 간편한 소셜 로그인 지원.
+    *   **마이페이지**: 내가 본 운세 기록 저장 및 다시 보기.
+*   **결제 및 포인트(복채) 시스템**:
+    *   **포트원(PortOne) 연동**: 카카오페이 등을 통한 포인트 충전.
+    *   **보너스 적립**: 충전 금액에 따른 추가 포인트 지급.
+*   **공유 기능**:
+    *   **카카오톡 공유**: 재미있는 운세 결과를 지인들에게 공유.
+
+## 🛠 기술 스택
+
+### Frontend
+*   **React (Vite)**: 빠르고 효율적인 UI 개발.
+*   **CSS Modules**: 한국적인 미(美)를 살린 커스텀 스타일링.
+*   **Supabase Auth**: 소셜 로그인 인증 처리.
+*   **PortOne SDK**: 결제 모듈 연동.
+*   **Kakao SDK**: 카카오 로그인 및 공유 기능.
+
+### Backend
+*   **Node.js & Express**: 안정적인 서버 환경 구축.
+*   **GraphQL**: 효율적인 데이터 요청 및 응답 처리.
+*   **Google Gemini API**: 고성능 AI 모델을 활용한 운세 생성.
+*   **PostgreSQL (via Supabase)**: 관계형 데이터베이스 관리.
+
+### Database
+*   **Supabase**: PostgreSQL 기반의 BaaS(Backend as a Service).
+
+### Deployment
+*   **Frontend**: Vercel
+*   **Backend**: Render
+
+## 🏗 시스템 아키텍처
+
+```mermaid
+graph LR
+    User[사용자] -->|접속| Client[React Frontend (Vercel)]
+    Client -->|로그인| Kakao[Kakao Auth]
+    Client -->|결제| PortOne[PortOne PG]
+    Client -->|API 요청| Server[Node.js Server (Render)]
+    Server -->|AI 생성| Gemini[Google Gemini API]
+    Server -->|데이터 저장/조회| DB[(Supabase PostgreSQL)]
+    Client -->|인증 관리| SupabaseAuth[Supabase Auth]
+```
+
+## 💾 데이터베이스 구조
+
+Supabase(PostgreSQL)를 사용하여 다음과 같은 테이블로 구성되어 있습니다.
+
+### 1. `profiles` (사용자 정보)
+| 컬럼명 | 타입 | 설명 |
+| :--- | :--- | :--- |
+| `id` | UUID | 사용자 고유 ID (Auth 연동) |
+| `email` | Text | 이메일 |
+| `nickname` | Text | 닉네임 |
+| `credits` | Integer | 보유 포인트 (복채) |
+| `created_at` | Timestamp | 가입일 |
+
+### 2. `fortune_results` (운세 기록)
+| 컬럼명 | 타입 | 설명 |
+| :--- | :--- | :--- |
+| `id` | BigInt | 기록 고유 ID |
+| `user_id` | UUID | 사용자 ID (FK) |
+| `type` | Text | 'dream' (해몽) / 'saju' (사주) |
+| `input_content` | Text | 입력한 내용 (꿈 내용, 생년월일 등) |
+| `summary_result` | Text | 무료 요약 결과 |
+| `detail_result` | Text | 유료 상세 결과 |
+| `is_paid` | Boolean | 결제 여부 |
+| `created_at` | Timestamp | 생성일 |
+
+### 3. `payments` (결제 내역)
+| 컬럼명 | 타입 | 설명 |
+| :--- | :--- | :--- |
+| `id` | BigInt | 결제 고유 ID |
+| `user_id` | UUID | 사용자 ID (FK) |
+| `amount` | Integer | 결제 금액 |
+| `merchant_uid` | Text | 주문 번호 |
+| `imp_uid` | Text | 포트원 결제 고유 번호 |
+| `status` | Text | 결제 상태 |
+| `created_at` | Timestamp | 결제일 |
+
+## ⚡️ 설치 및 실행 방법
+
+### 사전 준비
+*   Node.js 설치
+*   Supabase 프로젝트 생성 및 테이블 설정
+*   Google Gemini API Key 발급
+*   Kakao Developers 앱 생성 (로그인/공유)
+*   PortOne 가맹점 가입
+
+### 1. 프로젝트 클론
+```bash
+git clone https://github.com/your-username/the_first_monetization_project.git
+cd the_first_monetization_project
+```
+
+### 2. 환경 변수 설정 (.env)
+프로젝트 루트에 `.env` 파일을 생성하고 필요한 키 값을 입력합니다. (보안상 깃허브에는 업로드되지 않습니다.)
+
+### 3. 백엔드 실행
+```bash
+cd backend
+npm install
+node index.js
+```
+
+### 4. 프론트엔드 실행
+새 터미널을 열고 프로젝트 루트에서 실행합니다.
+```bash
+npm install
+npm run dev
+```
+
+---
+
+Made with ❤️ by Hyojun
