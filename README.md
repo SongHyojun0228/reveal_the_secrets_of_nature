@@ -144,7 +144,7 @@ npm run dev
 ```
 ## 🚀 배포
 본 프로젝트는 지속적 통합 및 배포(CI/CD)를 위해 Vercel과 Render를 활용합니다.
-<a display="block" target="_blank">https://reveal-the-secrets-of-nature.vercel.app/</a>
+[https://reveal-the-secrets-of-nature.vercel.app/](https://reveal-the-secrets-of-nature.vercel.app/)
 
 ### Frontend (Vercel)
 프론트엔드는 Vercel을 통해 GitHub 저장소와 연동하여 자동 배포됩니다.
