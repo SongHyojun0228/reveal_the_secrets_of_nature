@@ -143,7 +143,7 @@ npm install
 npm run dev
 ```
 ## 🚀 배포
-주소 : [https://reveal-the-secrets-of-nature.vercel.app/](https://reveal-the-secrets-of-nature.vercel.app/){:target="_blank"}
+주소 : [https://reveal-the-secrets-of-nature.vercel.app/](https://reveal-the-secrets-of-nature.vercel.app/)
 
 ### Frontend (Vercel)
 프론트엔드는 Vercel을 통해 GitHub 저장소와 연동하여 자동 배포됩니다.
