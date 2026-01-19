@@ -146,8 +146,8 @@ npm run dev
 본 프로젝트는 지속적 통합 및 배포(CI/CD)를 위해 Vercel과 Render를 활용합니다.
 
 ### Frontend (Vercel)
-*   프론트엔드는 Vercel을 통해 GitHub 저장소와 연동하여 자동 배포됩니다.
-*   Environment Variables 설정:
+프론트엔드는 Vercel을 통해 GitHub 저장소와 연동하여 자동 배포됩니다.
+**Environment Variables 설정:**
 - VITE_SUPABASE_URL: Supabase 프로젝트 URL
 - VITE_SUPABASE_ANON_KEY: Supabase 익명 키
 - VITE_KAKAO_JAVASCRIPT_KEY: 카카오 디벨로퍼스 앱 키
@@ -155,8 +155,8 @@ npm run dev
 
 
 ### Backend (Render)
-*   백엔드는 Render의 Web Service를 통해 배포되며, Docker 또는 Node 환경에서 실행됩니다.
-*   Environment Variables 설정:
+백엔드는 Render의 Web Service를 통해 배포되며, Docker 또는 Node 환경에서 실행됩니다.
+**Environment Variables 설정:**
 - PORT: 10000 (Render 기본 포트)
 - GEMINI_API_KEY: Google Gemini API 키
 - SUPABASE_DB_URL: PostgreSQL 접속 문자열
