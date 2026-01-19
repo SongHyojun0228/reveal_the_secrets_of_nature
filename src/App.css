@@ -427,3 +427,117 @@ button:focus-visible {
   font-size: 0.95rem;
   white-space: pre-wrap;
 }
+
+/* 다크 모드 스타일 */
+.dark {
+  --bg-color: #2c2c2c; /* 먹물색 */
+  --text-color: #f0e9dd; /* 부드러운 흰색 */
+  --accent-color: #e6c46a; /* 금색 느낌의 하이라이트 */
+  --border-color: #555;
+}
+
+body.dark {
+  background-color: #1a1a1a;
+}
+
+.dark .korean-vibe-container {
+  border-left: 1px solid #444;
+  border-right: 1px solid #444;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+.dark .charge-btn {
+  background-color: var(--text-color);
+  color: #2c2c2c; /* 원래 배경색 */
+}
+
+.dark .logout-btn {
+  border-color: #555;
+  color: #bbb;
+  background-color: #3a3a3a;
+}
+.dark .logout-btn:hover {
+  background-color: #4a4a4a;
+}
+
+.dark .tab-btn {
+  color: #888;
+  border-bottom-color: #444;
+}
+.dark .tab-btn.active {
+  color: var(--text-color);
+  border-bottom-color: var(--accent-color);
+}
+
+.dark .input-section input,
+.dark .input-section textarea {
+  border-bottom-color: #666;
+}
+.dark .input-section input:focus,
+.dark .input-section textarea:focus {
+  border-bottom-color: var(--accent-color);
+}
+.dark .input-section input::placeholder,
+.dark .input-section textarea::placeholder {
+  color: #777;
+}
+
+.dark button:hover {
+  background-color: rgba(255, 255, 255, 0.08);
+}
+
+.dark .premium-btn {
+  background-color: var(--accent-color);
+  color: #2c2c2c;
+  border-color: var(--accent-color);
+}
+.dark .premium-btn:hover {
+  background-color: #d5b35a;
+  transform: translateY(-2px);
+}
+
+.dark .result-paper {
+  background-color: #383838;
+  border-color: #555;
+  box-shadow: 5px 5px 15px rgba(0,0,0,0.2);
+}
+.dark .result-paper::before {
+  border-color: #555;
+}
+
+.dark .modal-content {
+  border-color: #555;
+}
+
+.dark .charge-option-btn {
+  background-color: #3a3a3a;
+  border-color: #555;
+}
+.dark .charge-option-btn:hover {
+  background-color: #4a4a4a;
+  border-color: var(--accent-color);
+}
+
+.dark .bonus-text {
+  color: var(--accent-color);
+}
+
+.dark .close-btn {
+  background-color: #555;
+  color: #fff;
+}
+.dark .close-btn:hover {
+  background-color: #666;
+}
+
+.dark .history-item {
+  background-color: #3a3a3a;
+  border-color: #555;
+}
+
+.dark .history-header {
+  color: #aaa;
+}
+.dark .history-type {
+  color: var(--accent-color);
+}

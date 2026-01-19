@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import "./App.css"; // 여기에 한국풍 스타일 정의
 import { supabase } from "./supabaseClient";
+import { useTheme } from "./ThemeContext";
 
 import UserSection from "./UserSection";
 import TabGroup from "./TabGroup";
@@ -13,6 +14,7 @@ import HistoryModal from "./HistoryModal";
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/graphql";
 
 function App() {
+  const { theme, toggleTheme } = useTheme();
   const [user, setUser] = useState(null);
   const [credits, setCredits] = useState(0);
   const [mode, setMode] = useState("dream"); // 'dream' | 'saju'
@@ -32,6 +34,9 @@ function App() {
 
   // 초기 로드 시 로그인 상태 확인 및 포트원 스크립트 로드
   useEffect(() => {
+    // 테마 적용
+    document.body.className = theme;
+
     // 포트원 스크립트 로드
     const script = document.createElement("script");
     script.src = "https://cdn.iamport.kr/v1/iamport.js";
@@ -64,7 +69,7 @@ function App() {
     });
 
     return () => subscription.unsubscribe();
-  }, []);
+  }, [theme]);
 
   // 사용자 포인트 조회
   const fetchUserCredits = async (userId) => {
@@ -328,7 +333,24 @@ function App() {
   };
 
   return (
-    <div className="korean-vibe-container">
+    <div className={`korean-vibe-container ${theme}`}>
+      <button 
+        onClick={toggleTheme}
+        style={{
+          position: 'absolute',
+          top: '20px',
+          right: '20px',
+          background: 'transparent',
+          border: '1px solid var(--text-color)',
+          color: 'var(--text-color)',
+          padding: '5px 10px',
+          cursor: 'pointer',
+          fontSize: '0.8rem',
+          zIndex: 10,
+        }}
+      >
+        {theme === 'light' ? '야간 모드' : '주간 모드'}
+      </button>
       <h1 className="title">천기누설 (天機漏洩)</h1>
 
       <UserSection 
