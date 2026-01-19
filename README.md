@@ -142,7 +142,29 @@ node index.js
 npm install
 npm run dev
 ```
+## 🚀 배포
+본 프로젝트는 지속적 통합 및 배포(CI/CD)를 위해 Vercel과 Render를 활용합니다.
 
----
+### Frontend (Vercel)
+*   프론트엔드는 Vercel을 통해 GitHub 저장소와 연동하여 자동 배포됩니다.
+*   Environment Variables 설정:
+- VITE_SUPABASE_URL: Supabase 프로젝트 URL
+- VITE_SUPABASE_ANON_KEY: Supabase 익명 키
+- VITE_KAKAO_JAVASCRIPT_KEY: 카카오 디벨로퍼스 앱 키
+- VITE_BACKEND_URL: Render에 배포된 백엔드 API 주소
 
-Made with ❤️ by Hyojun
+
+### Backend (Render)
+*   백엔드는 Render의 Web Service를 통해 배포되며, Docker 또는 Node 환경에서 실행됩니다.
+*   Environment Variables 설정:
+- PORT: 10000 (Render 기본 포트)
+- GEMINI_API_KEY: Google Gemini API 키
+- SUPABASE_DB_URL: PostgreSQL 접속 문자열
+- PORTONE_API_SECRET: 포트원 API 비밀키
+- CORS_ORIGIN: Vercel 프론트엔드 도메인 주소
+- Build Command: cd backend && npm install
+- Start Command: cd backend && node index.js
+
+### API 통신 구조
+*   보안을 위해 모든 AI 로직 및 결제 검증은 **Backend(Render)**에서 처리합니다.
+*   프론트엔드는 환경 변수에 따라 개발 환경(localhost)과 운영 환경(Render 도메인)을 구분하여 API를 호출합니다.
