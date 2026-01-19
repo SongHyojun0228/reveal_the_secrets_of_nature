@@ -189,12 +189,28 @@ body {
 .form-row label {
   font-weight: 500;
   min-width: 80px;
+  flex-shrink: 0; /* 라벨이 줄어들지 않도록 */
+}
+
+.form-row input[type="date"],
+.form-row input[type="time"] {
+  flex-grow: 1; /* 남은 공간을 채우도록 */
+  min-width: 0; /* 최소 너비를 0으로 설정하여 유연하게 만듦 */
 }
 
 .radio-group {
   justify-content: center;
   gap: 15px;
   margin-top: 10px;
+  flex-wrap: wrap; /* 작은 화면에서 라디오 버튼들이 줄바꿈되도록 */
+}
+
+.radio-group label {
+  display: flex; /* 라디오 버튼과 텍스트를 정렬하기 위해 flex 사용 */
+  align-items: center; /* 수직 중앙 정렬 */
+  gap: 5px; /* 라디오 버튼과 텍스트 사이 간격 */
+  font-weight: normal; /* 라디오 버튼 라벨 폰트 굵기 조정 */
+  min-width: unset; /* 라벨의 최소 너비 설정 해제 */
 }
 
 .divider {
