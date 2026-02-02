@@ -5,7 +5,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: rgba(0, 0, 0, 0.7);
+  background-color: rgba(0, 0, 0, 0.9); /* Opaque black for better visibility */
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,7 +13,7 @@
 }
 
 .modal-content {
-  background-color: var(--background-color); /* 테마에 맞게 조정 */
+  background-color: var(--bg-color); /* 테마에 맞게 조정 */
   color: var(--text-color); /* 테마에 맞게 조정 */
   padding: 30px;
   border-radius: 10px;
@@ -69,12 +69,12 @@
 }
 
 .modal-button.tertiary {
-  background-color: var(--gray-color); /* 테마에 맞게 조정 */
-  color: var(--text-color-dark);
+  background-color: #6c757d; /* Darker gray for visibility */
+  color: white;
 }
 
 .modal-button.tertiary:hover {
-  background-color: var(--gray-color-dark); /* 테마에 맞게 조정 */
+  background-color: #5a6268; /* Slightly darker on hover */
 }
 
 /* App.css에 정의된 테마 변수를 사용할 예정 */

@@ -42,8 +42,8 @@ const schema = buildSchema(`
     getDreamInterpretation(keyword: String!, isPaid: Boolean!, userId: ID): FortuneResult
     getSajuFortune(birthDate: String!, birthTime: String, gender: String!, calendarType: String!, isPaid: Boolean!, userId: ID): FortuneResult
     chargeCredits(userId: ID!, paymentAmount: Int!, creditAmount: Int!, impUid: String!, merchantUid: String!): Int
-    unlockWithCredits(id: ID!, userId: ID!): FortuneResult
-    createAndUnlockFortune(type: String!, input: String!, userId: ID!): FortuneResult
+    unlockWithCredits(id: ID!, userId: ID!, isFreeUnlockAfterAd: Boolean): FortuneResult # Added isFreeUnlockAfterAd
+    createAndUnlockFortune(type: String!, input: String!, userId: ID!, isFreeUnlockAfterAd: Boolean): FortuneResult # Added isFreeUnlockAfterAd
   }
 `);
 
@@ -191,20 +191,21 @@ const root = {
   },
 
   // 포인트 사용 및 결과 잠금 해제
-  unlockWithCredits: async ({ id, userId }) => {
+  unlockWithCredits: async ({ id, userId, isFreeUnlockAfterAd = false }) => { // Added isFreeUnlockAfterAd
     try {
-      // 1. 사용자 포인트 확인 및 차감 (500 포인트)
-      const userRes = await pool.query('SELECT credits FROM profiles WHERE id = $1', [userId]);
-      if (userRes.rows.length === 0) throw new Error("사용자 정보를 찾을 수 없습니다.");
-      
-      const currentCredits = userRes.rows[0].credits;
-      if (currentCredits < 500) {
-        throw new Error("포인트가 부족합니다. 충전 후 이용해주세요.");
+      if (!isFreeUnlockAfterAd) { // Only check/deduct credits if not a free unlock
+        // 1. 사용자 포인트 확인 및 차감 (500 포인트)
+        const userRes = await pool.query('SELECT credits FROM profiles WHERE id = $1', [userId]);
+        if (userRes.rows.length === 0) throw new Error("사용자 정보를 찾을 수 없습니다.");
+        
+        const currentCredits = userRes.rows[0].credits;
+        if (currentCredits < 500) {
+          throw new Error("포인트가 부족합니다. 충전 후 이용해주세요.");
+        }
+
+        // 포인트 차감
+        await pool.query('UPDATE profiles SET credits = credits - 500 WHERE id = $1', [userId]);
       }
-
-      // 포인트 차감
-      await pool.query('UPDATE profiles SET credits = credits - 500 WHERE id = $1', [userId]);
-
       // 2. 저장된 기록 가져오기
       const selectRes = await pool.query('SELECT input_content, type FROM fortune_results WHERE id = $1', [id]);
       if (selectRes.rows.length === 0) throw new Error("해당 꿈 기록을 찾을 수 없습니다.");
@@ -253,18 +254,19 @@ const root = {
   },
 
   // (신규) 바로 상세 풀이 생성 (무료 단계 생략)
-  createAndUnlockFortune: async ({ type, input, userId }) => {
+  createAndUnlockFortune: async ({ type, input, userId, isFreeUnlockAfterAd = false }) => { // Added isFreeUnlockAfterAd
     try {
-      // 1. 포인트 확인 및 차감
-      const userRes = await pool.query('SELECT credits FROM profiles WHERE id = $1', [userId]);
-      if (userRes.rows.length === 0) throw new Error("사용자 정보를 찾을 수 없습니다.");
-      
-      const currentCredits = userRes.rows[0].credits;
-      if (currentCredits < 500) {
-        throw new Error("포인트가 부족합니다. 충전 후 이용해주세요.");
+      if (!isFreeUnlockAfterAd) { // Only check/deduct credits if not a free unlock
+        // 1. 포인트 확인 및 차감
+        const userRes = await pool.query('SELECT credits FROM profiles WHERE id = $1', [userId]);
+        if (userRes.rows.length === 0) throw new Error("사용자 정보를 찾을 수 없습니다.");
+        
+        const currentCredits = userRes.rows[0].credits;
+        if (currentCredits < 500) {
+          throw new Error("포인트가 부족합니다. 충전 후 이용해주세요.");
+        }
+        await pool.query('UPDATE profiles SET credits = credits - 500 WHERE id = $1', [userId]);
       }
-      await pool.query('UPDATE profiles SET credits = credits - 500 WHERE id = $1', [userId]);
-
       // 2. 상세 분석 생성
       let persona = "당신은 한국의 신비로운 점술가입니다. 옛날 이야기하듯 고어체와 경어체를 섞어 신뢰감 있고 다정하게 말하세요.";
       let prompt = "";
