@@ -1,0 +1,80 @@
+/* src/InsufficientCreditsModal.css */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modal-content {
+  background-color: var(--background-color); /* 테마에 맞게 조정 */
+  color: var(--text-color); /* 테마에 맞게 조정 */
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  max-width: 400px;
+  width: 90%;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.modal-content h2 {
+  margin-top: 0;
+  color: var(--primary-color); /* 테마에 맞게 조정 */
+}
+
+.modal-content p {
+  margin-bottom: 20px;
+  font-size: 1.1em;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: space-around;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.modal-button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 1em;
+  transition: background-color 0.2s ease-in-out;
+  flex: 1; /* 버튼들이 공간을 균등하게 차지하도록 */
+}
+
+.modal-button.primary {
+  background-color: var(--primary-color); /* 테마에 맞게 조정 */
+  color: white;
+}
+
+.modal-button.primary:hover {
+  background-color: var(--primary-color-dark); /* 테마에 맞게 조정 */
+}
+
+.modal-button.secondary {
+  background-color: var(--accent-color); /* 테마에 맞게 조정 */
+  color: white;
+}
+
+.modal-button.secondary:hover {
+  background-color: var(--accent-color-dark); /* 테마에 맞게 조정 */
+}
+
+.modal-button.tertiary {
+  background-color: var(--gray-color); /* 테마에 맞게 조정 */
+  color: var(--text-color-dark);
+}
+
+.modal-button.tertiary:hover {
+  background-color: var(--gray-color-dark); /* 테마에 맞게 조정 */
+}
+
+/* App.css에 정의된 테마 변수를 사용할 예정 */
