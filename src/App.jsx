@@ -367,7 +367,7 @@ function App() {
       >
         {theme === 'light' ? '야간 모드' : '주간 모드'}
       </button>
-      <h1 className="title">천기누설 (天機漏洩)</h1>
+      <h1 className="title">천기누설 - AI 꿈 해몽 풀이</h1>
 
       <UserSection 
         user={user} 

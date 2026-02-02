@@ -143,27 +143,33 @@ npm install
 npm run dev
 ```
 ## 🚀 배포
-주소 : [https://reveal-the-secrets-of-nature.vercel.app/](https://reveal-the-secrets-of-nature.vercel.app/)
+프로젝트 주소 : [https://reveal-the-secrets-of-nature.vercel.app/](https://reveal-the-secrets-of-nature.vercel.app/)
 
-### Frontend (Vercel)
-프론트엔드는 Vercel을 통해 GitHub 저장소와 연동하여 자동 배포됩니다.
-**Environment Variables 설정:**
-- VITE_SUPABASE_URL: Supabase 프로젝트 URL
-- VITE_SUPABASE_ANON_KEY: Supabase 익명 키
-- VITE_KAKAO_JAVASCRIPT_KEY: 카카오 디벨로퍼스 앱 키
-- VITE_BACKEND_URL: Render에 배포된 백엔드 API 주소
+### 1. 프론트엔드 배포 (Vercel)
+React 프론트엔드 애플리케이션은 Vercel을 통해 GitHub 저장소와 연동하여 자동 배포됩니다.
+1.  **Vercel 프로젝트 생성**: Vercel 대시보드에서 새로운 프로젝트를 생성하고, 본 GitHub 저장소를 연동합니다.
+2.  **환경 변수 설정**: Vercel 프로젝트 설정에서 다음 환경 변수들을 추가합니다.
+    *   `VITE_SUPABASE_URL`: Supabase 프로젝트 URL
+    *   `VITE_SUPABASE_ANON_KEY`: Supabase 익명 키
+    *   `VITE_KAKAO_JAVASCRIPT_KEY`: 카카오 디벨로퍼스 앱 키
+    *   `VITE_BACKEND_URL`: Render에 배포된 백엔드 GraphQL API 주소 (예: `https://your-backend-name.onrender.com/graphql`)
+3.  **배포 트리거**: GitHub에 코드를 푸시할 때마다 Vercel에서 자동으로 배포가 진행됩니다.
 
-
-### Backend (Render)
-백엔드는 Render의 Web Service를 통해 배포되며, Docker 또는 Node 환경에서 실행됩니다.
-**Environment Variables 설정:**
-- PORT: 10000 (Render 기본 포트)
-- GEMINI_API_KEY: Google Gemini API 키
-- SUPABASE_DB_URL: PostgreSQL 접속 문자열
-- PORTONE_API_SECRET: 포트원 API 비밀키
-- CORS_ORIGIN: Vercel 프론트엔드 도메인 주소
-- Build Command: cd backend && npm install
-- Start Command: cd backend && node index.js
+### 2. 백엔드 배포 (Render)
+Node.js Express GraphQL 백엔드 애플리케이션은 Render의 Web Service를 통해 배포됩니다.
+1.  **Render 서비스 생성**: Render 대시보드에서 'New Web Service'를 생성하고, `backend` 폴더가 있는 GitHub 저장소를 연동합니다.
+2.  **환경 설정**:
+    *   **Runtime**: Node.js
+    *   **Build Command**: `cd backend && npm install`
+    *   **Start Command**: `cd backend && node index.js`
+    *   **Environment Variables 설정**:
+        *   `PORT`: `10000` (Render의 기본 포트)
+        *   `GEMINI_API_KEY`: Google Gemini API 키
+        *   `SUPABASE_DB_URL`: PostgreSQL 접속 문자열 (Supabase에서 확인 가능)
+        *   `PORTONE_API_SECRET`: 포트원 API 비밀키 (PortOne 가맹점 관리자 페이지에서 발급)
+        *   `CORS_ORIGIN`: Vercel 프론트엔드 도메인 주소 (예: `https://reveal-the-secrets-of-nature.vercel.app`)
+3.  **백엔드 URL 확인**: Render 서비스 배포 완료 후, Render 대시보드에서 배포된 서비스의 URL을 확인합니다. 이 URL에 `/graphql` 경로를 붙인 것이 프론트엔드 `VITE_BACKEND_URL`이 됩니다. (예: `https://your-backend-name.onrender.com/graphql`)
+4.  **배포 트리거**: GitHub에 `backend` 코드 변경사항을 푸시할 때마다 Render에서 자동으로 배포가 진행됩니다.
 
 ### API 통신 구조
 *   보안을 위해 모든 AI 로직 및 결제 검증은 **Backend(Render)**에서 처리합니다.
