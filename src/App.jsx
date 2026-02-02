@@ -84,9 +84,12 @@ function App() {
     
     if (error) {
       console.error("복채 조회 실패:", error);
+      return 0; // 에러 발생 시 0 반환
     } else if (data) {
       setCredits(data.credits);
+      return data.credits; // 가져온 크레딧 값을 반환
     }
+    return 0; // 기본값 반환
   };
 
   // 마이페이지 기록 조회
@@ -234,103 +237,101 @@ function App() {
           alert("결제는 성공했으나 복채 적립 중 오류가 발생했습니다. 관리자에게 문의해주세요.\n" + error.message);
         }
       } else {
-                  alert(`결제 실패: ${rsp.error_msg}`);
-                }
-              });
-          };
-        
-          const handleWatchAd = async () => {
-            setShowInsufficientCreditsModal(false); // Close the modal
-            alert("광고 시청 후 무료 상세 풀이가 제공됩니다. (현재 백엔드 기능 개발 필요)"); // User message (for now)
-            await handleUnlock(true); // Call handleUnlock with flag to bypass frontend credit check
-          };
-        
-          // 상세 풀이 보기 (포인트 사용)
-          const handleUnlock = async (freeUnlockAfterAd = false) => { // Added freeUnlockAfterAd parameter
-            if (!user) {
-              alert("상세 풀이는 회원만 가능합니다. 로그인해주세요.");
-              return;
-            }
-            
-            // 무료 결과를 본 적이 없다면 입력값 확인
-            if (!resultId) {
-              if (mode === "dream" && !keyword) return alert("꿈 내용을 입력해주세요.");
-              if (mode === "saju" && !sajuInfo.birthDate) return alert("생년월일을 입력해주세요.");
-            }
-        
-            // 복채가 부족하고 광고 시청 후 무료 잠금이 아닌 경우 모달 띄우기
-            if (credits < 500 && !freeUnlockAfterAd) { 
-              setShowInsufficientCreditsModal(true); // Show the new modal
-              return;
-            }
-        
-            // 광고 시청 후 무료 잠금이 아닌 경우에만 500냥 차감 확인
-            if (!freeUnlockAfterAd) {
-                if (!window.confirm("500냥을 내고 천기를 확인하시겠습니까?")) return;
-            }
-        
-            setLoading(true);
-        
-            try {
-              let query = "";
-              
-              if (resultId) {
-                // 1. 이미 무료 결과를 본 경우 -> 기존 기록 잠금 해제
-                // NOTE: 이 부분은 백엔드에서 500 크레딧을 여전히 차감하려고 시도합니다.
-                // 광고 시청 후 완전한 무료를 구현하려면 백엔드 수정이 필요합니다.
-                query = `
-                  mutation {
-                    unlockWithCredits(id: "${resultId}", userId: "${user.id}") {
-                      detail
-                    }
-                  }
-                `;
-              } else {
-                // 2. 바로 상세 풀이 요청 -> 신규 생성 및 결제
-                // NOTE: 이 부분도 백엔드에서 500 크레딧을 여전히 차감하려고 시도합니다.
-                // 광고 시청 후 완전한 무료를 구현하려면 백엔드 수정이 필요합니다.
-                let inputContent = "";
-                if (mode === "dream") {
-                    inputContent = keyword;
-                } else {
-                    const genderStr = sajuInfo.gender === 'male' ? '남성' : '여성';
-                    const calendarStr = sajuInfo.calendarType === 'solar' ? '양력' : '음력';
-                    const timeStr = sajuInfo.birthTime ? sajuInfo.birthTime : '시간 모름';
-                    inputContent = `${sajuInfo.birthDate} ${timeStr} (${calendarStr}, ${genderStr})`;
-                }
-                query = `
-                  mutation {
-                    createAndUnlockFortune(type: "${mode}", input: "${inputContent}", userId: "${user.id}") {
-                      id
-                      detail
-                    }
-                  }
-                `;
-              }
-        
-              const response = await fetch(API_URL, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ query }),
-              });
-              const data = await response.json();
-              if (data.errors) {
-                throw new Error(data.errors[0].message);
-              }
-              
-              const resultData = resultId ? data.data.unlockWithCredits : data.data.createAndUnlockFortune;
-              setResult(resultData.detail);
-              if (!resultId) setResultId(resultData.id); // 결과 ID 저장 (이후 공유 등을 위해)
-              // 무료 잠금인 경우 포인트 갱신을 건너뛸 수 있지만, 현재 백엔드 로직에 따라 차감될 수 있으므로 일단 갱신 호출
-              if (user) fetchUserCredits(user.id); // 차감된 포인트 갱신
-            } catch (error) {
-              console.error(error);
-              alert(error.message);
-            } finally {
-              setLoading(false);
-            }
-          };
-  // 카카오톡 공유하기
+                            alert(`결제 실패: ${rsp.error_msg}`);
+                          }
+                        });
+                    };
+                  
+                    const handleWatchAd = async () => {
+                      setShowInsufficientCreditsModal(false); // Close the modal
+                      alert("광고 시청 후 무료 상세 풀이가 제공됩니다. (현재 백엔드 기능 개발 필요)"); // User message (for now)
+                      await handleUnlock(true); // Call handleUnlock with flag to bypass frontend credit check
+                    };
+                  
+                    // 상세 풀이 보기 (포인트 사용)
+                        const handleUnlock = async (freeUnlockAfterAd = false) => { // Added freeUnlockAfterAd parameter
+                          if (!user) {
+                            alert("상세 풀이는 회원만 가능합니다. 로그인해주세요.");
+                            return;
+                          }                      // 무료 결과를 본 적이 없다면 입력값 확인
+                      if (!resultId) {
+                        if (mode === "dream" && !keyword) return alert("꿈 내용을 입력해주세요.");
+                        if (mode === "saju" && !sajuInfo.birthDate) return alert("생년월일을 입력해주세요.");
+                      }
+                  
+                                    // 복채 확인 전, 최신 크레딧 정보를 다시 가져옵니다. (동기화 문제 해결)
+                                            let currentFetchedCredits = credits; // 현재 상태값으로 초기화
+                                            if (user) { 
+                                                currentFetchedCredits = await fetchUserCredits(user.id); // 최신 크레딧 값을 가져와 할당
+                                            }    // 이제 currentFetchedCredits를 사용하여 체크합니다.
+    if (currentFetchedCredits < 500 && !freeUnlockAfterAd) { 
+      setShowInsufficientCreditsModal(true); // Show the new modal
+      return;
+    }
+
+    // 광고 시청 후 무료 잠금이 아닌 경우에만 500냥 차감 확인
+    if (!freeUnlockAfterAd) {
+        if (!window.confirm("500냥을 내고 천기를 확인하시겠습니까?")) return;
+    }                  
+                      setLoading(true);
+                  
+                      try {
+                        let query = "";
+                        
+                        if (resultId) {
+                          // 1. 이미 무료 결과를 본 경우 -> 기존 기록 잠금 해제
+                          // NOTE: 이 부분은 백엔드에서 500 크레딧을 여전히 차감하려고 시도합니다.
+                          // 광고 시청 후 완전한 무료를 구현하려면 백엔드 수정이 필요합니다.
+                                  query = `
+                                    mutation {
+                                      unlockWithCredits(id: "${resultId}", userId: "${user.id}", isFreeUnlockAfterAd: ${freeUnlockAfterAd}) {
+                                        detail
+                                      }
+                                    }
+                                  `;                        } else {
+                          // 2. 바로 상세 풀이 요청 -> 신규 생성 및 결제
+                          // NOTE: 이 부분도 백엔드에서 500 크레딧을 여전히 차감하려고 시도합니다.
+                          // 광고 시청 후 완전한 무료를 구현하려면 백엔드 수정이 필요합니다.
+                          let inputContent = "";
+                          if (mode === "dream") {
+                              inputContent = keyword;
+                          } else {
+                              const genderStr = sajuInfo.gender === 'male' ? '남성' : '여성';
+                              const calendarStr = sajuInfo.calendarType === 'solar' ? '양력' : '음력';
+                              const timeStr = sajuInfo.birthTime ? sajuInfo.birthTime : '시간 모름';
+                              inputContent = `${sajuInfo.birthDate} ${timeStr} (${calendarStr}, ${genderStr})`;
+                          }
+                                  query = `
+                                    mutation {
+                                      createAndUnlockFortune(type: "${mode}", input: "${inputContent}", userId: "${user.id}", isFreeUnlockAfterAd: ${freeUnlockAfterAd}) {
+                                        id
+                                        detail
+                                      }
+                                    }
+                                  `;                        }
+                  
+                        const response = await fetch(API_URL, {
+                          method: "POST",
+                          headers: { "Content-Type": "application/json" },
+                          body: JSON.stringify({ query }),
+                        });
+                        const data = await response.json();
+                        if (data.errors) {
+                          throw new Error(data.errors[0].message);
+                        }
+                        
+                        const resultData = resultId ? data.data.unlockWithCredits : data.data.createAndUnlockFortune;
+                        setResult(resultData.detail);
+                        if (!resultId) setResultId(resultData.id); // 결과 ID 저장 (이후 공유 등을 위해)
+                        // 무료 잠금인 경우 포인트 갱신을 건너뛸 수 있지만, 현재 백엔드 로직에 따라 차감될 수 있으므로 일단 갱신 호출
+                        if (user) fetchUserCredits(user.id); // 차감된 포인트 갱신
+                      } catch (error) {
+                        console.error(error);
+                        alert(error.message);
+                      } finally {
+                        setLoading(false);
+                      }
+                    };  // 카카오톡 공유하기
   const shareToKakao = () => {
     if (!window.Kakao || !window.Kakao.isInitialized()) {
       return alert("카카오 SDK가 로드되지 않았거나 JavaScript 키가 설정되지 않았습니다.");
@@ -393,7 +394,7 @@ function App() {
 
       <div className="button-group">
         <button onClick={handleFreeCheck}>무료로 맛보기</button>
-        <button onClick={handleUnlock} className="premium-btn">
+        <button onClick={() => handleUnlock()} className="premium-btn">
           상세 풀이 (500냥 차감)
         </button>
       </div>
