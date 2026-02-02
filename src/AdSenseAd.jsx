@@ -29,7 +29,7 @@ const AdSenseAd = ({ adSlot }) => {
         className="adsbygoogle"
         style={{ display: 'block', width: '100%', height: '100%' }} // 컨테이너를 채우도록 설정
         data-ad-client="ca-pub-6608961257112881" 
-        data-ad-slot={adSlot || "YOUR_AD_SLOT_ID"} 
+        data-ad-slot={adSlot || "5782229426"} 
         data-ad-format="auto" 
         data-full-width-responsive="true"
       ></ins>
