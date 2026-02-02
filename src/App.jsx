@@ -407,7 +407,7 @@ function App() {
 
       {/* Conditional AdSense Ad */}
       {(!user || credits <= 0) && ( // Show ad if no user or user has 0 or fewer credits
-        <AdSenseAd adSlot="YOUR_AD_SLOT_ID" /> // User needs to specify an actual ad slot ID
+        <AdSenseAd adSlot="5782229426" />
       )}
 
       <InsufficientCreditsModal
