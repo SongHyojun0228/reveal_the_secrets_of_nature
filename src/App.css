@@ -3,7 +3,12 @@
 :root {
   --bg-color: #fdfbf7; /* 한지 느낌의 미색 */
   --text-color: #2c2c2c; /* 먹물색 */
+  --primary-color: #007bff; /* 파란색 계열의 기본 액션 색상 */
+  --primary-color-dark: #0056b3; /* 기본 색상의 어두운 버전 */
   --accent-color: #9a2a2a; /* 인주색 (붉은색) */
+  --accent-color-dark: #7a1f1f; /* 인주색의 어두운 버전 */
+  --gray-color: #6c757d; /* 회색 계열의 보조 색상 */
+  --gray-color-dark: #5a6268; /* 회색의 어두운 버전 */
   --border-color: #dcdcdc;
 }
 
