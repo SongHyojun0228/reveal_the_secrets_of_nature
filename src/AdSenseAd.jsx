@@ -3,26 +3,34 @@ import React, { useEffect } from 'react';
 const AdSenseAd = ({ adSlot }) => {
   useEffect(() => {
     try {
-      // window.adsbygoogle가 로드되면 광고를 푸시합니다.
-      (window.adsbygoogle = window.adsbygoogle || []).push({});
+      if (window.adsbygoogle) { // adsbygoogle가 로드되었는지 확인
+        (window.adsbygoogle = window.adsbygoogle || []).push({});
+      }
     } catch (e) {
       console.error("AdSense error:", e);
     }
-  }, []); // 컴포넌트가 마운트될 때 한 번만 실행
+  }, []); 
 
   return (
-    <div className="adsense-container" style={{ margin: '20px 0', textAlign: 'center' }}>
-      {/* 
-        Google AdSense가 이 div를 채울 것입니다.
-        'YOUR_AD_SLOT_ID'를 실제 애드센스 광고 슬롯 ID로 교체해야 합니다.
-        data-ad-client는 이미 index.html에 추가되어 있습니다.
-      */}
+    <div 
+      className="adsense-container" 
+      style={{ 
+        margin: '20px 0', 
+        textAlign: 'center',
+        minWidth: '280px', // 최소 너비 추가
+        minHeight: '250px', // 최소 높이 추가 (광고 크기에 따라 조정 가능)
+        display: 'flex', // 컨테이너 내에서 광고를 중앙 정렬하기 위해 flex 사용
+        justifyContent: 'center', 
+        alignItems: 'center', 
+        overflow: 'hidden' // 광고가 컨테이너를 벗어나는 경우 숨김
+      }}
+    >
       <ins 
         className="adsbygoogle"
-        style={{ display: 'block' }}
+        style={{ display: 'block', width: '100%', height: '100%' }} // 컨테이너를 채우도록 설정
         data-ad-client="ca-pub-6608961257112881" 
-        data-ad-slot={adSlot || "YOUR_AD_SLOT_ID"} // 이 부분을 실제 광고 슬롯 ID로 교체해야 합니다.
-        data-ad-format="auto"
+        data-ad-slot={adSlot || "YOUR_AD_SLOT_ID"} 
+        data-ad-format="auto" 
         data-full-width-responsive="true"
       ></ins>
     </div>
