@@ -9,6 +9,7 @@ import InputSection from "./InputSection";
 import ResultSection from "./ResultSection";
 import ChargeModal from "./ChargeModal";
 import HistoryModal from "./HistoryModal";
+import AdSenseAd from "./AdSenseAd";
 
 // 배포 환경에서는 환경 변수 사용, 로컬에서는 localhost 사용
 const API_URL = import.meta.env.VITE_API_URL || "http://localhost:4000/graphql";
@@ -388,6 +389,11 @@ function App() {
         result={result} 
         onShare={shareToKakao} 
       />
+
+      {/* Conditional AdSense Ad */}
+      {(!user || credits <= 0) && ( // Show ad if no user or user has 0 or fewer credits
+        <AdSenseAd adSlot="YOUR_AD_SLOT_ID" /> // User needs to specify an actual ad slot ID
+      )}
 
       <ChargeModal 
         show={showChargeModal} 
