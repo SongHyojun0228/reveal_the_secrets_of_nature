@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const About = () => {
   const pageStyle = {
@@ -22,6 +23,11 @@ const About = () => {
 
   return (
     <div style={pageStyle}>
+      <Helmet>
+        <title>서비스 소개 - 천기누설</title>
+        <meta name="description" content="AI 기반 꿈 해몽과 사주 풀이 서비스를 소개합니다. 정확하고 상세한 운세 분석을 경험하세요." />
+        <meta name="keywords" content="AI 꿈해몽, 사주풀이, 운세, 천기누설" />
+      </Helmet>
       <h1 style={headingStyle}>서비스 소개</h1>
       <h2 style={headingStyle}>주요 기능</h2>
       <ul>

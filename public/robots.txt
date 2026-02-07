@@ -1,2 +1,11 @@
 User-agent: *
 Allow: /
+Allow: /about
+Allow: /faq
+Allow: /blog
+Allow: /blog/*
+Allow: /privacy
+Allow: /terms
+Allow: /contact
+
+Sitemap: https://reveal-the-secrets-of-nature.vercel.app/sitemap.xml

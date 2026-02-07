@@ -6,6 +6,11 @@ import { useTheme } from "./ThemeContext";
 import MainApp from './pages/MainApp';
 import About from './pages/About';
 import FAQ from './pages/FAQ';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
+import Contact from './pages/Contact';
+import Blog from './pages/Blog';
+import BlogPost from './pages/BlogPost';
 
 function App() {
   const { theme } = useTheme();
@@ -41,8 +46,9 @@ function App() {
     <div className={"korean-vibe-container " + theme}>
       <nav style={navStyle}>
         <Link to="/" style={linkStyle}>홈</Link>
+        <Link to="/blog" style={linkStyle}>꿈 해몽 가이드</Link>
         <Link to="/about" style={linkStyle}>서비스 소개</Link>
-        <Link to="/faq" style={linkStyle}>자주 묻는 질문</Link>
+        <Link to="/faq" style={linkStyle}>FAQ</Link>
       </nav>
 
       <main style={{ width: '100%' }}> {/* 너비 100% 추가 */}
@@ -50,11 +56,25 @@ function App() {
           <Route path="/" element={<MainApp />} />
           <Route path="/about" element={<About />} />
           <Route path="/faq" element={<FAQ />} />
+          <Route path="/privacy" element={<Privacy />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogPost />} />
         </Routes>
       </main>
 
       <footer style={footerStyle}>
-        © 2024 천기누설. All Rights Reserved.
+        <div style={{ marginBottom: '10px' }}>
+          <Link to="/privacy" style={linkStyle}>개인정보처리방침</Link>
+          {' | '}
+          <Link to="/terms" style={linkStyle}>이용약관</Link>
+          {' | '}
+          <Link to="/contact" style={linkStyle}>연락처</Link>
+        </div>
+        <div>
+          © 2024 천기누설. All Rights Reserved.
+        </div>
       </footer>
     </div>
   );

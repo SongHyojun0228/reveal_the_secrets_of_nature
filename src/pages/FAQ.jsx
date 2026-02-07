@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { Helmet } from 'react-helmet-async';
 
 const FAQ = () => {
     const pageStyle = {
@@ -28,6 +29,11 @@ const FAQ = () => {
 
   return (
     <div style={pageStyle}>
+      <Helmet>
+        <title>자주 묻는 질문 - 천기누설</title>
+        <meta name="description" content="천기누설 서비스 이용에 관한 자주 묻는 질문과 답변을 확인하세요." />
+        <meta name="keywords" content="FAQ, 자주묻는질문, 천기누설 이용방법" />
+      </Helmet>
       <h1 style={headingStyle}>자주 묻는 질문 (FAQ)</h1>
 
       <div style={questionStyle}>Q. AI 꿈 해몽 결과는 얼마나 정확한가요?</div>
