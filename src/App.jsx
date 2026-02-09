@@ -77,6 +77,7 @@ function App() {
           © 2024 천기누설. All Rights Reserved.
         </div>
       </footer>
+      <Analytics />
     </div>
   );
 }
