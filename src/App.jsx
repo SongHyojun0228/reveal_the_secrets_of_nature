@@ -11,6 +11,7 @@ import Terms from './pages/Terms';
 import Contact from './pages/Contact';
 import Blog from './pages/Blog';
 import BlogPost from './pages/BlogPost';
+import { Analytics } from "@vercel/analytics/next"
 
 function App() {
   const { theme } = useTheme();
